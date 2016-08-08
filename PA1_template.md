@@ -1,24 +1,15 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
 
 
 
-```{r, echo=F, message=F, results='hide'}
-library(dplyr)
-library(ggplot2)
-library(Hmisc)
-Sys.setlocale("LC_ALL","English")
-```
+
 
 
 
 ## Loading and preprocessing the data
 
-```{r}
+
+```r
 activity = read.csv(unzip('activity.zip'))
 ```
 
@@ -26,21 +17,25 @@ activity = read.csv(unzip('activity.zip'))
 
 ## What is mean total number of steps taken per day?
 
-```{r}
+
+```r
 stepsByDay = with(activity, tapply(steps, date, sum, na.rm=T))
 
 qplot(stepsByDay, xlab='Total steps per day', binwidth=500)
 ```
 
-* Mean total number of steps per day: `r mean(stepsByDay,na.rm=T)`
+![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
 
-* Median total number of steps per day: `r median(stepsByDay,na.rm=T)`
+* Mean total number of steps per day: 9354.2295082
+
+* Median total number of steps per day: 10395
 
 
 
 ## What is the average daily activity pattern?
 
-```{r}
+
+```r
 averageStepsByInterval = aggregate(steps ~ interval, activity, mean, na.rm=T)
 
 ggplot(averageStepsByInterval, aes(x=interval, y=steps)) +
@@ -49,13 +44,16 @@ ggplot(averageStepsByInterval, aes(x=interval, y=steps)) +
     ylab("Average number of steps") 
 ```
 
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+
 
 
 ## Imputing missing values
 
-Number of incomplete cases: `r sum(!complete.cases(activity))`
+Number of incomplete cases: 2304
 
-```{r}
+
+```r
 activity.imputed = activity
 activity.imputed$steps = impute(activity$steps,mean)
 
@@ -64,15 +62,18 @@ stepsByDay = with(activity.imputed, tapply(steps, date, sum, na.rm=T))
 qplot(stepsByDay, xlab='Total steps per day (Imputed)', binwidth=500)
 ```
 
-* Mean total number of steps per day: `r mean(stepsByDay,na.rm=T)`
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
 
-* Median total number of steps per day: `r median(stepsByDay,na.rm=T)`
+* Mean total number of steps per day: 1.0766189\times 10^{4}
+
+* Median total number of steps per day: 1.0766189\times 10^{4}
 
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-```{r}
+
+```r
 activity.imputed$dayType = ifelse(weekdays(as.Date(activity.imputed$date)) %in%
                                     c('Saturday','Sunday'),'weekend','weekday') 
   
@@ -84,6 +85,8 @@ ggplot(averageStepsByInterval, aes(interval, steps)) +
     xlab("Interval") +
     ylab("Average number of steps") 
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
 
 
 
