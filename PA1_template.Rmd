@@ -49,7 +49,7 @@ ggplot(averageStepsByInterval, aes(x=interval, y=steps)) +
     ylab("Average number of steps") 
 ```
 
-
+Interval `r averageStepsByInterval$interval[averageStepsByInterval$steps==max(averageStepsByInterval$steps)]` contains the  maximum number of steps.
 
 ## Imputing missing values
 

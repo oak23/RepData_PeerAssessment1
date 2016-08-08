@@ -46,7 +46,7 @@ ggplot(averageStepsByInterval, aes(x=interval, y=steps)) +
 
 ![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
-
+Interval 835 contains the  maximum number of steps.
 
 ## Imputing missing values
 
